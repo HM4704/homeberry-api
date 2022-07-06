@@ -20,13 +20,45 @@ def startBtSpeaker():
 
 @app.route("/kodi/kill")
 def killKodi():
-	subprocess.run("sudo systemctl stop kodi".split())
+	#subprocess.run("sudo systemctl stop kodi".split())
+	subprocess.run("pkill -15 kodi".split())
 	return "Killing Kodi service"
 
 @app.route("/kodi/start")
 def startKodi():
-	subprocess.run("sudo systemctl start kodi".split())
+	subprocess.Popen("kodi".split(), start_new_session=True)
+	#subprocess.run("sudo systemctl start kodi".split())
 	return "Starting Kodi service"
+
+@app.route("/mousepad/kill")
+def killMP():
+	subprocess.run("pkill -15 mousepad".split())
+	return "Killing mousepad"
+
+@app.route("/mousepad/start")
+def startMP():
+	subprocess.Popen("mousepad".split(), start_new_session=True)
+	return "Starting mousepad"
+
+@app.route("/tv/on")
+def onTV():
+	subprocess.run("./tv_on.sh".split())
+	return "TV einschalten"
+
+@app.route("/tv/standby")
+def standbyTV():
+	subprocess.run("./tv_off.sh".split())
+	return "TV standby"
+
+@app.route("/tv/input_pi")
+def inPiTV():
+	subprocess.run("./tv_hdmi3.sh".split())
+	return "Quelle PI"
+
+@app.route("/tv/input_sat")
+def inSatTV():
+	subprocess.run("./tv_hdmi2.sh".split())
+	return "Quelle SAT"
 
 @app.route("/shutdown")
 def shutdown():
