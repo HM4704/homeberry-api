@@ -1,8 +1,11 @@
 #!/home/pi/homeberryApi/bin/python
 from flask import Flask
+from apscheduler.schedulers.background import BackgroundScheduler
 import subprocess
 
+
 app = Flask(__name__)
+
 
 @app.route("/")
 def helloWorld():
@@ -70,6 +73,13 @@ def reboot():
 	subprocess.run("sudo shutdown -r now".split())
 	return "Restarting Raspberry"
 
-if __name__ == '__main__':
-	app.run(host='0.0.0.0', port=5000)
+def test_job():
+    print('switching off tv...')
+    standbyTV()
 
+
+if __name__ == '__main__':
+	scheduler = BackgroundScheduler()
+	job = scheduler.add_job(test_job, 'cron', day_of_week ='mon-sun', hour=2, minute=30)
+	scheduler.start()
+	app.run(host='0.0.0.0', port=5000)
