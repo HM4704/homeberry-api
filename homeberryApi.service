@@ -3,7 +3,8 @@ Description=Homeberry API Service
 After=network.target
 
 [Service]
-ExecStart=/home/pi/homeberryApi/homeberryApi.py
+WorkingDirectory=/home/pi/Projects/homeberry-api
+ExecStart=python /home/pi/Projects/homeberry-api/homeberryApi.py
 StandardOutput=inherit
 StandardError=inherit
 Restart=always
