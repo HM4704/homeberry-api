@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "tx 4F:82:30:00" | cec-client -s -d 1
+cec-ctl -d/dev/cec0 --to 0 --active-source phys-addr=3.0.0.0
